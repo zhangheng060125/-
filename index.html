@@ -9,9 +9,9 @@
 <div class="compass"><b>↑</b>沿用草图方向<br>非地理北向</div>
 <aside class="legend"><h2>材质与空间边界</h2><div class="legend-row"><i class="swatch"></i>深灰实体墙 · 封闭房间</div><div class="legend-row"><i class="swatch blue"></i>浅蓝保温玻璃 · 露台界面</div><div class="legend-row"><i class="swatch cyan"></i>青色可视玻璃 · 展示界面</div><div class="legend-row"><i class="swatch dash"></i>虚线仅作分区 · 无墙无门</div><p>左键 / 单指旋转 · 滚轮 / 双指缩放<br>右键 / 双指平移 · 点击区域查看信息<br>默认剖切展示第三层；下两层为外观示意。</p></aside>
 <div class="model-note">筹备方案 · 室内细分与核心筒待实测<br>单文件离线运行 · THREE.JS</div>
-<aside class="card" id="card" aria-label="区域信息" aria-live="polite"><div class="card-top"><span><i class="dot" id="selectedDot"></i>区域档案 / V1</span><button id="closeCard" aria-label="关闭区域信息">×</button></div><h2 id="cardTitle"></h2><div class="card-metrics"><div><strong id="cardArea"></strong><small>V1分区面积</small></div><div><strong id="cardSize"></strong><small>方案尺寸 · 待实测</small></div></div><p id="cardUse"></p><p class="edge" id="cardEdge"></p><button class="focus-btn" id="focusThis">聚焦此区域</button><div class="source">面积未扣墙柱；负责人及6席代理合计135㎡。<br>本沙盘用于品牌空间沟通，不替代建筑、消防或冷链施工设计。</div></aside>
+<aside class="card" id="card" aria-label="区域信息" aria-live="polite"><div class="card-top"><span><i class="dot" id="selectedDot"></i>区域档案 / V1</span><button id="closeCard" aria-label="关闭区域信息">×</button></div><h2 id="cardTitle"></h2><div class="card-metrics"><div><strong id="cardArea"></strong><small>V1分区面积</small></div><div><strong id="cardSize"></strong><small>方案尺寸 · 待实测</small></div></div><p id="cardUse"></p><p class="edge" id="cardEdge"></p><button class="focus-btn" id="focusThis">聚焦此区域</button><div class="source">面积未扣墙柱；区域总负责人及6席负责人合计135㎡。<br>本沙盘用于品牌空间沟通，不替代建筑、消防或冷链施工设计。</div></aside>
 <div class="toast" id="toast" role="status"></div><div id="loading">正在构建三层沙盘…<small>首次打开无需联网 · 请启用浏览器 WebGL</small></div><div id="error" hidden role="alert"></div>
-<dialog id="helpDialog"><h2>在空间里查看方案</h2><p>鼠标左键拖动旋转，滚轮缩放，右键拖动平移。手机单指旋转，双指缩放或平移。点击地面或家具可查看所在区域。</p><p>「完整外墙」切换外观与剖切模型；「区域聚焦」淡化其他区域。漫游采用约85秒环线：到达区→长廊→沙龙→露台→办公区。点击漫游按钮或按 Esc 停止。</p><p>尺寸统一采用整层坐标：上方露台Y=0–8；室内Y=8–34；负责人Y=8–12.8；代理Y=12.8–26；财务Y=26–30；核心筒Y=30–34。沙龙Y=8–30，储藏Y=30–34。</p><p>数据依据已确认V1：918㎡总轮廓，424㎡露台，494㎡室内。室内尺寸为建议，未标成实测数据。三层高按每层3.6m作可视化假设；第三层空间高度3.2m。下两层立面、家具、灯具与机电均为示意。</p><p>「导出截图」保存当前视角与面积标题。文件包含全部代码和Three.js，无外部请求，浏览器直接打开即可运行。</p><button id="closeHelp">知道了</button></dialog>
+<dialog id="helpDialog"><h2>在空间里查看方案</h2><p>鼠标左键拖动旋转，滚轮缩放，右键拖动平移。手机单指旋转，双指缩放或平移。点击地面或家具可查看所在区域。</p><p>「完整外墙」切换外观与剖切模型；「区域聚焦」淡化其他区域。漫游采用约85秒环线：到达区→长廊→沙龙→露台→办公区。点击漫游按钮或按 Esc 停止。</p><p>尺寸统一采用整层坐标：上方露台Y=0–8；室内Y=8–34；区域总负责人Y=8–12.8；负责人Y=12.8–26；财务Y=26–30；核心筒Y=30–34。沙龙Y=8–30，储藏Y=30–34。</p><p>数据依据已确认V1：918㎡总轮廓，424㎡露台，494㎡室内。室内尺寸为建议，未标成实测数据。三层高按每层3.6m作可视化假设；第三层空间高度3.2m。下两层立面、家具、灯具与机电均为示意。</p><p>「导出截图」保存当前视角与面积标题。文件包含全部代码和Three.js，无外部请求，浏览器直接打开即可运行。</p><button id="closeHelp">知道了</button></dialog>
 <script>window.addEventListener('error',function(e){const el=document.getElementById('error');el.hidden=false;el.textContent='沙盘启动失败：'+e.message+'。请使用支持WebGL的Chrome、Edge或Safari浏览器。';});</script>
 <!-- Three.js 0.160.1 MIT license
 The MIT License
@@ -1528,10 +1528,10 @@ window.THREE.OrbitControls=OrbitControls;})();</script>
 (() => {
 const $=s=>document.querySelector(s), BASE=7.2, roomHeight=3.2;
 const zones=[
-{id:'salon',name:'沙龙展示与洽谈区',short:'品牌沙龙',x:8,z:8,w:9,d:22,area:198,color:0xe7d6bb,use:'集品牌形象展示、燕窝品鉴、客户接待与商务洽谈于一体，承接总部来访、代理培训及会员沙龙。',edge:'北侧局部普通可视玻璃；西侧保温玻璃；面向公共长廊完全开放。'},
+{id:'salon',name:'沙龙展示与洽谈区',short:'品牌沙龙',x:8,z:8,w:9,d:22,area:198,color:0xe7d6bb,use:'集品牌形象展示、燕窝品鉴、客户接待与商务洽谈于一体，承接总部来访、负责人培训及会员沙龙。',edge:'北侧局部普通可视玻璃；西侧保温玻璃；面向公共长廊完全开放。'},
 {id:'storage',name:'可视化温控储藏室',short:'温控储藏',x:8,z:30,w:9,d:4,area:36,color:0xc0dce5,use:'燕窝温控存储与透明化展示。温湿度、产品冷链及仓储合规条件须由品牌方和专业单位确认；本模型不代表已获合规验收。',edge:'北、南、东三面实墙；西面保温玻璃。北侧实墙局部嵌可视玻璃及保温门，面向沙龙展示。'},
 {id:'corridor',name:'公共长廊',short:'中央长廊',x:17,z:8,w:2.5,d:26,area:65,color:0xd6bb91,use:'连接到达区、财务室、开放办公及品牌沙龙的主要访客动线，品牌文化展柜采用浅薄、靠实体墙的方式布置。',edge:'宽2.5米；沙龙及开放办公两侧不设隔墙。文化展柜仅设在南段实体墙侧。'},
-{id:'office',name:'负责人及代理开放办公区',short:'开放办公',x:19.5,z:8,w:7.5,d:18,area:135,color:0xcdd8c3,use:'北侧开放负责人位，南侧两列三排6个区域代理工位；每席含桌椅、显示器、小绿植及小沙发，支持安徽区域运营和代理协同。',edge:'负责人位与代理工位之间、办公区与公共长廊之间均无墙无门。135㎡为两部分合计。'},
+{id:'office',name:'区域总负责人及负责人开放办公区',short:'开放办公',x:19.5,z:8,w:7.5,d:18,area:135,color:0xcdd8c3,use:'北侧开放区域总负责人位，南侧两列三排6个区域负责人工位；每席含桌椅、显示器、小绿植及小沙发，支持安徽区域运营和负责人协同。',edge:'区域总负责人位与负责人工位之间、办公区与公共长廊之间均无墙无门。135㎡为两部分合计。'},
 {id:'finance',name:'财务室',short:'封闭财务',x:19.5,z:26,w:7.5,d:4,area:30,color:0xd4dce1,use:'设置2个财务工位及文件柜，承担区域结算、财务管理与档案存放。独立封闭，入口面向公共长廊。',edge:'深灰色实体墙；门朝公共长廊。位于门禁入内右侧第一间。'},
 {id:'core',name:'电梯、楼梯及到达区',short:'电梯与入口',x:19.5,z:30,w:7.5,d:4,area:30,color:0xd7d8d3,use:'电梯与折跑楼梯到达后，经电梯厅及门禁进入公共长廊。地面箭头展示到达动线。现有核心筒真实尺寸和结构尚待实测。',edge:'实体墙围合；南侧到达区设门禁入口标识。电梯井及楼梯仅作位置示意。'},
 {id:'terraceN',name:'上方户外露台',short:'上方露台',x:0,z:0,w:27,d:8,area:216,color:0xccd9b9,use:'5组带遮阳伞的户外圆桌、户外沙发及边缘花箱，承接产品品鉴、小型沙龙与商务交流。',edge:'与左侧露台开放连通；女儿墙与绿植沿外围布置，顶部方位沿用原图，不代表正北。'},
@@ -1649,8 +1649,8 @@ for(const [x,z] of [[11.1,17],[14,22],[11.4,27]]){box(groups.salon,x,z,4.1,3.9,.
 pointLight(groups.salon,12.5,9.3,2.7,0xffce89,9,8);
 // Open office. Internal x/y coordinates are floor-plan coordinates.
 box(groups.office,23.25,10.4,6.5,3.7,.018,.055,mat(0xd6cbbb));desk(groups.office,23.1,9.55,2.4,true);sofa(groups.office,25.6,11.4,1.6,Math.PI/2);plant(groups.office,20.2,8.8,true);
-label(groups.office,'负责人 · 开放无隔墙',23.1,9.2,2.4,.54);
-for(let row=0;row<3;row++)for(let col=0;col<2;col++){const x=21.2+col*3.65,z=14.1+row*4.25,n=row*2+col+1;desk(groups.office,x,z);sofa(groups.office,x,z+2.5,1.5,Math.PI);label(groups.office,'代理 '+String(n).padStart(2,'0'),x,z,1.75,.55);}
+label(groups.office,'区域总负责人 · 开放无隔墙',23.1,9.2,2.4,.54);
+for(let row=0;row<3;row++)for(let col=0;col<2;col++){const x=21.2+col*3.65,z=14.1+row*4.25,n=row*2+col+1;desk(groups.office,x,z);sofa(groups.office,x,z+2.5,1.5,Math.PI);label(groups.office,'负责人'+String(n).padStart(2,'0'),x,z,1.75,.55);}
 for(const z of [8.5,17.8,25])plant(groups.office,26.5,z,true);
 // No wall geometry: dashed floor hints only on open boundaries.
 line(groups.office,[[19.5,8,.065],[19.5,26,.065]],0x98a88c,true);line(groups.office,[[19.5,12.8,.065],[27,12.8,.065]],0x98a88c,true);
